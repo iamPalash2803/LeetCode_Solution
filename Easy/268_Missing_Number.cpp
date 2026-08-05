@@ -79,21 +79,25 @@
 
 class Solution {
 public:
+    //XOR approch -> Best Approch
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
 
-        // Expected sum of numbers from 0 to n
-        int expectedSum = n * (n + 1) / 2;
+        int ans = 0;
 
-        // Actual sum of array elements
-        int actualSum = 0;
-
-        for (int num : nums)
+        // XOR all indices from 0 to n
+        for (int i = 0; i <= n; i++)
         {
-            actualSum += num;
+            ans ^= i;
         }
 
-        // Missing number
-        return expectedSum - actualSum;
+        // XOR all array elements
+        for (int num : nums)
+        {
+            ans ^= num;
+        }
+
+        // Remaining value is the missing number
+        return ans;
     }
 };
