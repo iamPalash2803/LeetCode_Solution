@@ -40,10 +40,36 @@ class Solution {
 public:
     vector<int> sortedSquares(vector<int>& nums) {
         int n = nums.size();
-        for(int i = 0; i<n; i++){
-            nums[i] = nums[i]*nums[i];
+
+        // Result array to store the final sorted squares
+        vector<int> ans(n);
+
+        // Two pointers
+        int left = 0;
+        int right = n - 1;
+
+        // Index where the largest square should be placed
+        int idx = n - 1;
+
+        while (left <= right)
+        {
+            // Compare absolute values because
+            // the larger absolute value gives the larger square.
+            if (abs(nums[left]) > abs(nums[right]))
+            {
+                ans[idx] = nums[left] * nums[left];
+                left++;
+            }
+            else
+            {
+                ans[idx] = nums[right] * nums[right];
+                right--;
+            }
+
+            // Move to the next position from the back
+            idx--;
         }
-        sort(nums.begin(), nums.end());
-        return nums;
+
+        return ans;
     }
 };
