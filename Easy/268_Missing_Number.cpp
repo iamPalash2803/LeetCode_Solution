@@ -80,14 +80,20 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        int n= nums.size();
-        int i;
-        sort(nums.begin(), nums.end());
-        for(i = 0; i< n; i++){
-            if(nums[i] != i){
-                break;
-            }
+        int n = nums.size();
+
+        // Expected sum of numbers from 0 to n
+        int expectedSum = n * (n + 1) / 2;
+
+        // Actual sum of array elements
+        int actualSum = 0;
+
+        for (int num : nums)
+        {
+            actualSum += num;
         }
-        return i;
+
+        // Missing number
+        return expectedSum - actualSum;
     }
 };
