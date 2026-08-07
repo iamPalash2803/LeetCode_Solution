@@ -53,7 +53,17 @@ class Solution {
 public:
     string removeOccurrences(string s, string part) {
         
+        // Repeat until:
+        // 1. String becomes empty, OR
+        // 2. 'part' is no longer found in the string.
+
         while(s.length() > 0 && s.find(part) < s.length()){
+
+            // find(part) returns the index of the
+            // first occurrence of 'part'.
+            // erase(startIndex, length)
+            // removes 'length' characters starting
+            // from startIndex.
             s.erase(s.find(part), part.length());
         }
         return s;
