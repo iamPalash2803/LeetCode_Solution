@@ -59,11 +59,15 @@
 class Solution {
 public:
 
+    // Returns true if all packages can be shipped
+    // within the given number of days using maxWeight capacity.
     bool findDay(vector<int>& weights, int days, int maxWeight){
         int day = 1;
         int weight = 0;
 
         for(int i = 0; i< weights.size(); i++){
+            // Current package cannot fit in today's ship.
+            // Start a new day and load this package.
             if(weight + weights[i] > maxWeight){
                 day++;
                 weight = weights[i];
@@ -72,10 +76,12 @@ public:
                 weight += weights[i];
             }
         }
+        // Valid if required days are within the limit.
         return day <= days? true:false;
     }
 
     int shipWithinDays(vector<int>& weights, int days) {
+        // Minimum possible capacity = Heaviest package.
         int low = *max_element(weights.begin(), weights.end());
         int high = 0;
         int ans;
@@ -84,14 +90,15 @@ public:
         }
         while(low <= high){
 
+            // Safe way to calculate mid (avoids integer overflow).
             int mid = low + (high - low)/2;
 
             if(findDay(weights, days, mid)){
-                ans = mid;
-                high = mid - 1;
+                ans = mid;   // Current capacity works.
+                high = mid - 1;   // Try a smaller capacity.
             }
             else{
-                low = mid + 1;
+                low = mid + 1;   // Capacity too small.
             }
         }
         return ans;
