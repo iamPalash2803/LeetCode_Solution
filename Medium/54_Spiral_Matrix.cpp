@@ -49,6 +49,10 @@ public:
             }
 
             for(int j = ecol - 1; j >= scol; j--){
+
+                // Only one row is left.
+                // It is already printed as the Top Row.
+                // Skip Bottom Row to avoid duplicate printing.
                 if(srow == erow)
                     break;
                 
@@ -57,6 +61,10 @@ public:
             }
 
             for(int i = erow-1; i>= srow+1; i--){
+
+                // Only one column is left.
+                // It is already printed as the Right Column.
+                // Skip Left Column to avoid duplicate printing.
                 if(scol == ecol)
                     break;
                 ans.push_back(mat[i][scol]);
