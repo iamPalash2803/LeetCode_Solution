@@ -29,34 +29,43 @@
 class Solution {
 public:
 
-    void getAllSubsets(vector<int>& nums, vector<int> ans, int idx, set<vector<int>> &subSets){
+    void getAllSubsets(vector<int> &nums, vector<int> &ans, int i, vector<vector<int>> &allSubsets)
+    {
 
-        if(idx == nums.size()){
-            sort(ans.begin(), ans.end());
-            subSets.insert(ans);
+        if (i == nums.size())
+        {
+            // store subsets
+            allSubsets.push_back(ans);
             return;
         }
 
+        // include
+        ans.push_back(nums[i]);
+        getAllSubsets(nums, ans, i + 1, allSubsets);
 
-        // Include current element
-        ans.push_back(nums[idx]);
-        getAllSubsets(nums, ans, idx+1, subSets);
+        ans.pop_back(); // backtrack
 
-        // Exclude current element
-        ans.pop_back();
-        getAllSubsets(nums, ans, idx+1, subSets);
+        // Skipping the duplicate values
+        int idx = i + 1;
+        while (idx < nums.size() && nums[idx] == nums[idx - 1])
+        {
+            idx++;
+        }
 
+        // exclude
+        getAllSubsets(nums, ans, idx, allSubsets);
     }
 
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        // Sort only once.
+        // Duplicate elements become adjacent.
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> allSubsets;
+
         vector<int> ans;
-        set<vector<int>> subSets;
 
-        getAllSubsets(nums, ans, 0, subSets);
+        getAllSubsets(nums, ans, 0, allSubsets);
 
-        // Convert set into vector
-        vector<vector<int>> allSubsets(subSets.begin(), subSets.end());
-        
         return allSubsets;
     }
 };
