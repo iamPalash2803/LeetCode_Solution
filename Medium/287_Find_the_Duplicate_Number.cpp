@@ -50,16 +50,35 @@
 
 class Solution {
 public:
-    int findDuplicate(vector<int>& nums) {
-        unordered_set<int>s;
+    int findDuplicate(vector<int>& arr) {
+        // Both pointers start from the first value.
+        int slow = arr[0];
+        int fast = arr[0]; 
 
-        for(auto val: nums){
-            if(s.find(val) != s.end()){
-                return val;
-            }
-            s.insert(val);
+        // Phase 1:
+        // Find the meeting point inside the cycle.
+        do
+        {
+            // Slow moves one step.
+            slow = arr[slow];   //slow -> +1
+
+            // Fast moves two steps.
+            fast = arr[arr[fast]];   //fast-> +2
+
+        } while (slow != fast);
+
+        // Phase 2:
+        // Reset slow to the beginning.
+        slow = arr[0];
+
+        // Move both pointers one step at a time.
+        while (slow != fast)
+        {
+            slow = arr[slow];
+            fast = arr[fast];
         }
 
-        return -1;
+        // Meeting point is the duplicate value.
+        return slow;
     }
 };
