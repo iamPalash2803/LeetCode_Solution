@@ -74,13 +74,25 @@ public:
         if(!isCycle){
             return NULL;
         }
-        else{
-            slow = head;
-            while(slow != fast){
-                slow = slow->next;
-                fast = fast->next;
-            }
+
+        slow = head;
+        while(slow != fast){
+            slow = slow->next;
+            fast = fast->next;
         }
-        return slow;
+        // slow and fast are at cycle start
+        ListNode* cycleStart = slow;
+
+        // Find the last node of the cycle
+        ListNode* lastNode = cycleStart;
+
+        while (lastNode->next != cycleStart) {
+            lastNode = lastNode->next;
+        }
+        
+        // Break the cycle
+        lastNode->next = NULL;
+
+        return cycleStart;
     }
 };
