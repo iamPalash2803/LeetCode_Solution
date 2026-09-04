@@ -50,8 +50,9 @@ public:
         ListNode* curr = head;
         int count = 0;
         while(temp != NULL){
-            count++;
             temp = temp -> next;
+            count++;
+            
         }
         int mid = count/2 + 1;
 
