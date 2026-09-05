@@ -83,6 +83,7 @@ public:
         Node* newTemp = newHead;
         m[head] = newHead;
 
+        // Create all copied nodes and connect next pointers
         while(oldTemp != NULL){
             Node* copyNode = new Node(oldTemp -> val);
             m[oldTemp] = copyNode;
@@ -92,6 +93,7 @@ public:
             newTemp = newTemp -> next;
         }
 
+         // Connect random pointers using the map
         oldTemp = head; newTemp = newHead;
         while(oldTemp != NULL){
             newTemp -> random = m[oldTemp->random];
