@@ -66,35 +66,35 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        int k = 2;
-        ListNode* temp = head;
-        int count = 0;
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+        ListNode* first = head;
+        ListNode* second = head-> next;
+        ListNode* prev = NULL;
 
-        //Cheak if k nodes exists or not
-        while(count < k){
-            if(temp == NULL){
-                return head;
+        while(first != NULL && second != NULL){
+            ListNode* third = second-> next;
+
+            second->next = first;
+            first->next = third;
+
+            if(prev != NULL){
+                prev-> next = second;
+            }else{
+                head = second;
             }
-            temp = temp->next;
-            count++;
+
+            //update pointers
+            prev = first;
+            first = third;
+            if(third != NULL){
+                second = third-> next;
+            }else{
+                second = NULL;
+            }
+
         }
-
-        //Recursive call for rest of the linked list
-        ListNode* prevNode = swapPairs(temp);
-
-        //reverse current group
-        temp = head; count = 0;
-        while(count < k){
-            ListNode* next = temp->next;
-            temp->next = prevNode;
-
-            prevNode = temp;
-            temp = next;
-
-            count++;
-        }
-
-        return prevNode;
-
+        return head;
     }
 };
