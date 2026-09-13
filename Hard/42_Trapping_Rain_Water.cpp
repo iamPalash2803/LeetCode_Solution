@@ -35,31 +35,26 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n = height.size();
-
-        // leftMax[i] = maximum height from left to i
-        vector<int> leftMax(n, 0);
-
-        // rightMax[i] = maximum height from right to i
-        vector<int> rightMax(n, 0);
-
-        leftMax[0] = height[0];
-        rightMax[n-1] = height[n-1];
-
-        // Build left maximum array
-        for(int i = 1; i < n; i++){
-            leftMax[i] = max(height[i], leftMax[i-1]);
-        }
-
-        // Build right maximum array
-        for(int i = n-2; i >= 0; i--){
-            rightMax[i] = max(height[i], rightMax[i+1]);
-        }
-
+        int left = 0;
+        int right = n - 1;
+        int lMax = 0;
+        int rMax = 0;
         int ans = 0;
 
-        // Water at i = min(leftMax, rightMax) - height[i]
-        for(int i = 0; i < n; i++){
-            ans += min(leftMax[i], rightMax[i]) - height[i];
+        while(left < right) {
+            // Keep track of maximum height from both sides.
+            lMax = max(height[left], lMax);
+            rMax = max(height[right], rMax);
+
+            // Smaller maximum decides the trapped water.
+            if(lMax < rMax) {
+                ans += lMax - height[left];
+                left++;
+            }
+            else {
+                ans += rMax - height[right];
+                right--;
+            }
         }
 
         return ans;
