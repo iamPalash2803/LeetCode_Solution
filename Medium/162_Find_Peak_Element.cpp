@@ -57,6 +57,9 @@ public:
             else if(arr[mid] < arr[mid-1]){
                 end = mid -1;
             }
+            // arr[mid] == arr[mid-1]: cannot determine the slope from the left,
+            // so move right and continue searching for a peak.
+            // Equal elements → slope is unclear, so safely search right.
             else{
                 st = mid + 1;
             }
