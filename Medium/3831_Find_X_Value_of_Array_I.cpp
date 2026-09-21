@@ -99,33 +99,26 @@
  * ----- Solution -----
  */
 
+int freq[5], freq2[5];
 class Solution {
 public:
-    vector<long long> resultArray(vector<int>& nums, int k) {
-        vector<long long> result(k, 0);
-        vector<long long> dp(k, 0);
-
-        for (int num : nums) {
-            vector<long long> newDp(k, 0);
-
-            // Start a new subarray with only num
-            int rem = num % k;
-            newDp[rem]++;
-
-            // Extend previous subarrays
-            for (int r = 0; r < k; r++) {
-                int newRem = (r * rem) % k;
-                newDp[newRem] += dp[r];
+    static vector<long long> resultArray(vector<int>& nums, int k) {
+        const int n=nums.size();
+        if (k==1) return {1LL*n*(n+1)/2};// special case
+        vector<long long> ans(k, 0);
+        memset(freq, 0, sizeof(int)*k);// freq[r]=how many times seen for x%k
+        for (int x: nums){
+            const int r=x%k;
+            memset(freq2, 0, sizeof(int)*k);
+            ans[r]++;
+            for (int j=0; j<k; j++){
+                const int prod=1LL*j*r%k;
+                freq2[prod]+=freq[j];
+                ans[prod]+=freq[j];
             }
-
-            // Add all subarrays ending at current index
-            for (int r = 0; r < k; r++) {
-                result[r] += newDp[r];
-            }
-
-            dp = newDp;
+            freq2[r]++;
+            memcpy(freq,freq2, sizeof(int)*k);
         }
-
-        return result;
+        return ans;
     }
 };
